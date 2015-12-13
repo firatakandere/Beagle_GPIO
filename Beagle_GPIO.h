@@ -5,6 +5,9 @@
 #include <sys/ioctl.h>
 #include <linux/types.h>
 #include <linux/spi/spidev.h>
+#include <string>
+
+#define HELPER_PATH "/sys/devices/ocp.3/helper.15"
 
 #define GPIO_ERROR(msg)	std::cout << "[GPIO] Error : " << msg << std::endl;
 
@@ -154,6 +157,13 @@ public:
      * @return Pin value
      */
     unsigned char readPin( unsigned short _pin );
+
+    /**
+     * @brief Read a value from analog pin
+     * @param _pin Analog pin name
+     * @return Analog pin value
+     */
+    unsigned int readAnalog( std::string _pin );
 
     /**
      * @brief Open SPI Channel

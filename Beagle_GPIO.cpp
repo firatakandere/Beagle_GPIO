@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/mman.h>
+#include <fstream>
 #include "Beagle_GPIO.h"
 
 const int Beagle_GPIO::GPIO_Pin_Bank[] = 
@@ -237,6 +238,19 @@ Beagle_GPIO::Beagle_GPIO_Status Beagle_GPIO::writePin( unsigned short _pin, unsi
     m_gpio[GPIO_Pin_Bank[_pin]][kDATAOUT/4] |= v;
 
     return kSuccess;
+}
+
+unsigned int Beagle_GPIO::readAnalog( std::string _pin ) {
+    std::ifstream file;
+    std::string s;
+    std::string filename(HELPER_PATH "/" + _pin);
+    int value;
+
+    file.open(filename, std::ios::in);
+    std::getline(file,s);
+    file.close();
+    value = std::stoi(s);
+    return value;
 }
 
 //=======================================================
